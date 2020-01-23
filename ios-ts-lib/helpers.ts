@@ -43,6 +43,7 @@ export class Helpers {
     let image = nativeWrapper,
       placeholder = nativeWrapper.placeholder,
       placeholderImage = this.getPlaceholderUIImage(placeholder);
+    image.nativeView.sd_imageTransition = SDWebImageTransition.fadeTransition;
     if (types.isString(value)) {
       value = value.trim();
       if (0 === value.indexOf("http")) {
