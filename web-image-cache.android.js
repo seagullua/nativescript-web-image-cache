@@ -11,6 +11,13 @@ var roundedProperty = new view_1.Property({
     defaultValue: false,
     valueConverter: view_1.booleanConverter,
     affectsLayout: true
+}), radiusProperty = new view_1.Property({
+    name: "radius",
+    defaultValue: undefined,
+    valueConverter: function (v) {
+        return v;
+    },
+    affectsLayout: true
 }), placeholderProperty = new view_1.Property({
     name: "placeholder",
     defaultValue: undefined,
@@ -36,6 +43,7 @@ var roundedProperty = new view_1.Property({
 web_image_cache_common_1.srcProperty.register(web_image_cache_common_1.WebImageCommon);
 web_image_cache_common_1.isLoadingProperty.register(web_image_cache_common_1.WebImageCommon);
 roundedProperty.register(web_image_cache_common_1.WebImageCommon);
+radiusProperty.register(web_image_cache_common_1.WebImageCommon);
 placeholderStretchProperty.register(web_image_cache_common_1.WebImageCommon);
 stretchProperty.register(web_image_cache_common_1.WebImageCommon);
 placeholderProperty.register(web_image_cache_common_1.WebImageCommon);
@@ -63,6 +71,9 @@ var WebImage = (function (_super) {
         if (undefined !== this.rounded) {
             helpers_1.Helpers.setRounded(simpleDraweeView.getHierarchy(), this.rounded);
         }
+        if (undefined !== this.radius) {
+            helpers_1.Helpers.setRadius(simpleDraweeView.getHierarchy(), this.radius);
+        }
         if (undefined !== this.placeholder) {
             helpers_1.Helpers.setPlaceholder(simpleDraweeView.getHierarchy(), this.placeholder, this.placeholderStretch);
         }
@@ -73,12 +84,19 @@ var WebImage = (function (_super) {
             helpers_1.Helpers.setSource(this, this.src);
         }
     };
+    WebImage.prototype[radiusProperty.getDefault] = function () {
+        return undefined;
+    };
     WebImage.prototype[roundedProperty.getDefault] = function () {
         return false;
     };
     WebImage.prototype[roundedProperty.setNative] = function (value) {
         var simpleDraweeView = this.nativeView;
         helpers_1.Helpers.onRoundedPropertyChanged(simpleDraweeView, value);
+    };
+    WebImage.prototype[radiusProperty.setNative] = function (value) {
+        var simpleDraweeView = this.nativeView;
+        helpers_1.Helpers.onRadiusPropertyChanged(simpleDraweeView, value);
     };
     WebImage.prototype[placeholderProperty.getDefault] = function () {
         return undefined;

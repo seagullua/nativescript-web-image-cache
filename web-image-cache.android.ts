@@ -14,6 +14,14 @@ let roundedProperty = new Property<WebImageCommon, boolean>({
   valueConverter: booleanConverter,
   affectsLayout: true
 }),
+  radiusProperty = new Property<WebImageCommon, string>({
+    name: "radius",
+    defaultValue: undefined,
+    valueConverter: function(v) {
+      return v;
+    },
+    affectsLayout: true
+  }),
   placeholderProperty = new Property<WebImageCommon, string>({
     name: "placeholder",
     defaultValue: undefined,
@@ -42,6 +50,7 @@ let roundedProperty = new Property<WebImageCommon, boolean>({
 srcProperty.register(WebImageCommon);
 isLoadingProperty.register(WebImageCommon);
 roundedProperty.register(WebImageCommon);
+radiusProperty.register(WebImageCommon);
 placeholderStretchProperty.register(WebImageCommon);
 stretchProperty.register(WebImageCommon);
 placeholderProperty.register(WebImageCommon);
@@ -49,6 +58,7 @@ placeholderProperty.register(WebImageCommon);
 export class WebImage extends WebImageCommon {
 
   public rounded: boolean;
+  public radius: string;
   public placeholder: string;
   public placeholderStretch: string;
 
@@ -72,6 +82,9 @@ export class WebImage extends WebImageCommon {
     if (undefined !== this.rounded) {
       helpers.setRounded(simpleDraweeView.getHierarchy(), this.rounded);
     }
+    if (undefined !== this.radius) {
+      helpers.setRadius(simpleDraweeView.getHierarchy(), this.radius);
+    }
     if (undefined !== this.placeholder) {
       helpers.setPlaceholder(simpleDraweeView.getHierarchy(), this.placeholder, this.placeholderStretch);
     }
@@ -84,6 +97,10 @@ export class WebImage extends WebImageCommon {
     }
   }
 
+  [radiusProperty.getDefault]() {
+    return undefined;
+  }
+
   [roundedProperty.getDefault]() {
     return false;
   }
@@ -91,6 +108,11 @@ export class WebImage extends WebImageCommon {
   [roundedProperty.setNative](value) {
     let simpleDraweeView = this.nativeView;
     helpers.onRoundedPropertyChanged(simpleDraweeView, value);
+  }
+
+  [radiusProperty.setNative](value) {
+    let simpleDraweeView = this.nativeView;
+    helpers.onRadiusPropertyChanged(simpleDraweeView, value);
   }
 
   [placeholderProperty.getDefault]() {

@@ -23,6 +23,11 @@ export class Helpers {
     draweeHierarchy.setRoundingParams(roundingParams);
   }
 
+  public static setRadius(draweeHierarchy, radius) {
+    let roundingParams = new com.facebook.drawee.generic.RoundingParams.fromCornersRadius(radius);
+    draweeHierarchy.setRoundingParams(roundingParams);
+  }
+
   public static setPlaceholder(draweeHierarchy, src, placeholderStretch) {
     let drawable = this.getPlaceholderImageDrawable(src),
       nativePlaceholderStretch = stretchMap.get(placeholderStretch) || com.facebook.drawee.drawable.ScalingUtils.ScaleType.CENTER;
@@ -116,6 +121,14 @@ export class Helpers {
     }
     let draweeHierarchy = nativeObject.getHierarchy();
     this.setRounded(draweeHierarchy, value);
+  }
+
+  public static onRadiusPropertyChanged(nativeObject, value) {
+    if (!nativeObject) {
+      return;
+    }
+    let draweeHierarchy = nativeObject.getHierarchy();
+    this.setRadius(draweeHierarchy, value);
   }
 
   public static onPlaceholderPropertyChanged(nativeObject, src, placeholderStretch) {

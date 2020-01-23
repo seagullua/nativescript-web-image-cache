@@ -2,6 +2,7 @@
 import { WebImageCommon } from './web-image-cache.common';
 export declare class WebImage extends WebImageCommon {
     rounded: boolean;
+    radius: string;
     placeholder: string;
     placeholderStretch: string;
     constructor();

@@ -20,6 +20,10 @@ var Helpers = (function () {
             roundingParams.setRoundAsCircle(false);
         draweeHierarchy.setRoundingParams(roundingParams);
     };
+    Helpers.setRadius = function (draweeHierarchy, radius) {
+        var roundingParams = new com.facebook.drawee.generic.RoundingParams.fromCornersRadius(radius);
+        draweeHierarchy.setRoundingParams(roundingParams);
+    };
     Helpers.setPlaceholder = function (draweeHierarchy, src, placeholderStretch) {
         var drawable = this.getPlaceholderImageDrawable(src), nativePlaceholderStretch = stretch_mapping_1.StretchMapping.get(placeholderStretch) || com.facebook.drawee.drawable.ScalingUtils.ScaleType.CENTER;
         if (null == drawable) {
@@ -90,6 +94,13 @@ var Helpers = (function () {
         }
         var draweeHierarchy = nativeObject.getHierarchy();
         this.setRounded(draweeHierarchy, value);
+    };
+    Helpers.onRadiusPropertyChanged = function (nativeObject, value) {
+        if (!nativeObject) {
+            return;
+        }
+        var draweeHierarchy = nativeObject.getHierarchy();
+        this.setRadius(draweeHierarchy, value);
     };
     Helpers.onPlaceholderPropertyChanged = function (nativeObject, src, placeholderStretch) {
         if (!nativeObject) {
